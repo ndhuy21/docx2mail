@@ -7,7 +7,7 @@ from docxtpl import DocxTemplate
 import mammoth
 from dotenv import load_dotenv
 
-context = {"title": "docx2mail", "name": "Huy"}
+
 load_dotenv()
 
 
@@ -41,11 +41,13 @@ def send_email(sender_email, sender_password, recipient_email, subject, html_con
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
+    if len(sys.argv) > 3:
         filename = sys.argv[1]
         recipient_email = sys.argv[2]
+        title = sys.argv[3]
         filename = "hello.docx"
 
+        context = {"title": title, "name": "Huy"}
         html_content = get_html(filename, context)
 
         sender_email = os.getenv("SENDER_EMAIL")
@@ -56,4 +58,4 @@ if __name__ == "__main__":
                    recipient_email, subject, html_content)
         print("Done!")
     else:
-        print("Error: need filename")
+        print("Error: need filename, recipient_email, title ")
